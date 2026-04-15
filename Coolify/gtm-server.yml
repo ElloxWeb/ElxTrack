@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  gtm_preview:
+    image: gcr.io/cloud-tagging-10302018/gtm-cloud-image:stable
+    environment:
+    - CONTAINER_CONFIG=${CONTAINER_CONFIG}
+    - RUN_AS_PREVIEW_SERVER=true
+    - PORT=8080
+    expose:
+    - "8080"
+
+  gtm_live:
+    image: gcr.io/cloud-tagging-10302018/gtm-cloud-image:stable
+    depends_on:
+    - gtm_preview
+    environment:
+    - CONTAINER_CONFIG=${CONTAINER_CONFIG}
+    - PREVIEW_SERVER_URL=${PREVIEW_SERVER_URL}
+    - PORT=8080
+    expose:
+    - "8080"
